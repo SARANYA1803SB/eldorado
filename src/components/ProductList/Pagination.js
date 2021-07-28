@@ -6,94 +6,69 @@ const Pagination = (props) => {
 
 
     const [pages] = useState(Math.ceil(props.totalPosts / props.postsPerPage));
-    const [currentPage, setCurrentPage] = useState(1);
-
-    //Get current posts
-    const indexOfLastPost = currentPage * props.postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - props.postsPerPage;
-    const currentPosts = props.productsDetail.slice(indexOfFirstPost, indexOfLastPost);
-
+    
     function goToNextPage() {
-        setCurrentPage((page) => page + 1);
+        props.paginate(props.currentPage+1);
     }
 
     function goToPreviousPage() {
-        setCurrentPage((page) => page - 1);
+        props.paginate(props.currentPage-1);
     }
+    
     const getPaginationGroup = () => {
-        if (pages < props.pageLimit) {
+        if (pages < 5) {
 
-            let start = Math.floor((currentPage - 1) / pages) * pages;
+            let start = Math.floor((props.currentPage - 1) / pages) * pages;
             return new Array(pages).fill().map((_, idx) => start + idx + 1);
 
-        } else if (pages >= props.pageLimit && currentPage <= props.pageLimit) {
+        } else if (pages >= 5 && props.currentPage <= 5) {
 
-            let start = Math.floor((currentPage - 1) / props.pageLimit) * props.pageLimit;
-            return new Array(props.pageLimit).fill().map((_, idx) => start + idx + 1);
+            let start = Math.floor((props.currentPage - 1) / 5) * 5;
+            return new Array(5).fill().map((_, idx) => start + idx + 1);
 
-        } else if (pages > props.pageLimit && currentPage > props.pageLimit) {
+        } else if (pages > 5 && props.currentPage > 5) {
 
-            let start = currentPage - 1;
-            return new Array(props.pageLimit).fill().map((_, idx) => start + idx - 3);
+            let start = props.currentPage - 1;
+            return new Array(5).fill().map((_, idx) => start + idx - 3);
 
         }
     };
 
     function changePage(event) {
         const pageNumber = Number(event.target.textContent);
-        setCurrentPage(pageNumber);
+        props.paginate(pageNumber);
     }
 
 
-    const product = (productData) => {
-        return (
-            <div className="col-6 col-md-4" > 
-            <div className="card p-3 mb-5 bg-white rounded" id="item">
-                <Col className="center" xs={6} md={4}>
-                <Image  src={productData.imageUrl} card/>
-                </Col>
-                <p className="title" id="title"><a>Name :{productData.name}</a></p>
-                <p className="price" id="price">Price :{productData.price}</p>
-            </div>
-            </div>
-
-        );
-    };
+    
 
     return (
-        <div>
-            <Container>
-                <Row>
-                    {currentPosts.map(product)}
-                </Row>
-
+    
                 <nav className="nav justify-content-center">
                     <ul className="pagination">
                         <button
                             onClick={goToPreviousPage}
-                            className={`page-link ${currentPage === 1 ? 'disabled' : ''}`}
+                            className={`page-link ${props.currentPage === 1 ? 'disabled' : ''}`}
                         >
                             prev
                         </button>
                         {getPaginationGroup().map((item, index) => (
                             <li key={index} className="page-item">
-                                <button onClick={changePage} className={`page-link ${currentPage === item ? 'active' : null}`}>
+                                <button onClick={changePage} className={`page-link ${props.currentPage === item ? 'active' : null}`}>
                                     {item}
                                 </button>
                             </li>
                         ))}
                         <button
                             onClick={goToNextPage}
-                            className={`page-link ${currentPage === pages ? 'disabled' : ''}`}
+                            className={`page-link ${props.currentPage === pages ? 'disabled' : ''}`}
                         >
                             next
                         </button>
 
                     </ul>
                 </nav>
-            </Container>
-
-        </div>
+           
     );
 }
 
