@@ -47,15 +47,16 @@ const Pagination = (props) => {
 
     const product = (productData) => {
         return (
-            <div className="col-6 col-md-4">
-                <div className="card shadow p-3 mb-5 bg-white rounded">
-                    <Col className="center" xs={6} md={4}>
-                        <Image src={productData.imageUrl} thumbnail />
-                    </Col>
-                    <p className="title">Name :{productData.name}</p>
-                    <p className="price">Price :{productData.price}</p>
-                </div>
+            <div className="col-6 col-md-4" > 
+            <div className="card p-3 mb-5 bg-white rounded" id="item">
+                <Col className="center" xs={6} md={4}>
+                <Image  src={productData.imageUrl} card/>
+                </Col>
+                <p className="title" id="title"><a>Name :{productData.name}</a></p>
+                <p className="price" id="price">Price :{productData.price}</p>
             </div>
+            </div>
+
         );
     };
 
