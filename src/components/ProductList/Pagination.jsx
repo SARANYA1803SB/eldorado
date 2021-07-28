@@ -52,8 +52,8 @@ const Pagination = (props) => {
                             prev
                         </button>
                         {getPaginationGroup().map((item, index) => (
-                            <li key={index} className="page-item">
-                                <button onClick={changePage} className={`page-link ${props.currentPage === item ? 'active' : null}`}>
+                            <li key={index} className="page-item" placeholder="number value">
+                                <button onClick={changePage} className={`page-link ${props.currentPage === item ? 'active' : null}`} placeholder="buttonElement">
                                     {item}
                                 </button>
                             </li>

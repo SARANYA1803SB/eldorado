@@ -22,7 +22,7 @@ const ProductList = (props) => {
             <div className="col-6 col-md-4" > 
             <div className="card p-3 mb-5 bg-white rounded thumbnail" id="item">
                 <Col className="center" xs={6} md={4}>
-                <Image  src={productData.imageUrl} card/>
+                <Image  src={productData.imageUrl} card="true"/>
                 </Col>
                 <p className="title" id="title"><a>Name :{productData.name}</a></p>
                 <p className="price" id="price">Price :{productData.price}</p>
