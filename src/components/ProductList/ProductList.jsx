@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 import Pagination from './Pagination';
-import { productsDetail } from './../../utils/ProductListUtil';
+//import { productsDetail } from './../../utils/ProductListUtil';
 import './ProductList.css';
+import axios from 'axios';
 
 const ProductList = (props) => {
 
     const[currentPage,setCurrentPage]=useState(1);
-    const [postsPerPage]=useState(9);
+    const [postsPerPage]=useState(15);
+    const [productsDetail,setProductDetail]=useState([]);
 
     //Get current posts
     const indexOfLastPost=currentPage*postsPerPage;
@@ -16,6 +18,12 @@ const ProductList = (props) => {
 
     // Change page
     const paginate =(number) =>setCurrentPage(number);
+
+    useEffect(()=>{
+        axios.get('http://localhost:8082/customer/products?page=1')
+        .then(response=>setProductDetail(response.data));
+    },[]);
+
     
     const product = (productData) => {
         return (
@@ -24,8 +32,8 @@ const ProductList = (props) => {
                 <Col className="center" xs={6} md={4}>
                 <Image  src={productData.imageUrl} card="true"/>
                 </Col>
-                <p className="title" id="title"><a>Name :{productData.name}</a></p>
-                <p className="price" id="price">Price :{productData.price}</p>
+                <p className="title" id="title"><a>{productData.name}</a></p>
+                <p className="price" id="price">₹{productData.price}</p>
             </div>
             </div>
 
